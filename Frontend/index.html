@@ -29,11 +29,17 @@
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav visible-lg visible-md limit-chars">
                                 <ul class="breadcrumb">
-                                    <a href="index.html">
-                                        <i class="zmdi zmdi-view-dashboard zmdi-hc-fw" title="Orders"></i>
+                                    <a href="index.html" title="Dashboard">
+                                        <i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i>
                                     </a>
-                                    <a href="manage-product.html">
-                                        <i class="zmdi zmdi-assignment zmdi-hc-fw" title="Products"></i>
+                                    <a href="manage-product.html" title="Products">
+                                        <i class="zmdi zmdi-assignment zmdi-hc-fw"></i>
+                                    </a>
+                                    <a href="order.html" title="New Order">
+                                        <i class="zmdi zmdi-shopping-cart zmdi-hc-fw"></i>
+                                    </a>
+                                    <a href="reports.html" title="Reports">
+                                        <i class="zmdi zmdi-chart zmdi-hc-fw"></i>
                                     </a>
                                 </ul>
                             </ul>
@@ -44,31 +50,100 @@
 
             <div class="right content-page">
                 <div class="body content rows scroll-y">
+                    <!-- Statistics Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number" id="totalOrders">0</div>
+                                <div class="stat-label">Total Orders</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number" id="totalProducts">0</div>
+                                <div class="stat-label">Total Products</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number" id="totalRevenue">₹0</div>
+                                <div class="stat-label">Total Revenue</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card">
+                                <div class="stat-number" id="lowStockItems">0</div>
+                                <div class="stat-label">Low Stock Items</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search and Filter Bar -->
+                    <div class="search-filter-bar">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Search Orders</label>
+                                <input type="text" class="form-control" id="searchOrders" placeholder="Search by customer name or order ID">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Filter by Date</label>
+                                <input type="date" class="form-control" id="filterDate">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Filter by Status</label>
+                                <select class="form-control" id="filterStatus">
+                                    <option value="">All Orders</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-info btn-block" onclick="applyFilters()">
+                                    <i class="fa fa-filter"></i> Apply Filters
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <form class="form-horizontal" action="">
                         <div class="box-info full" id="taskFormContainer">
-                            <h2>Grocery Store Management System</h2>
+                            <h2><i class="fa fa-shopping-cart"></i> Order Management Dashboard</h2>
                             <div class="panel-body pt-0">
                                 <div class="row mb-4">
-                                    <div class="col-sm-12">
-                                        <a href="order.html" class="btn btn-sm btn-primary pull-right ml-3">
-                                            New Order
+                                    <div class="col-sm-12 text-right">
+                                        <a href="order.html" class="btn btn-success">
+                                            <i class="fa fa-plus"></i> New Order
                                         </a>
-                                        <a href="manage-product.html" class="btn btn-sm btn-primary pull-right">
-                                            Manage Products
+                                        <a href="manage-product.html" class="btn btn-primary">
+                                            <i class="fa fa-box"></i> Manage Products
                                         </a>
+                                        <button class="btn btn-info" onclick="exportOrders()">
+                                            <i class="fa fa-download"></i> Export Orders
+                                        </button>
+                                        <button class="btn btn-warning" onclick="refreshDashboard()">
+                                            <i class="fa fa-refresh"></i> Refresh
+                                        </button>
                                     </div>
                                 </div>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <th>Date</th>
-                                        <th>Order Number</th>
-                                        <th>Customer Name</th>
-                                        <th>Total Cost</th>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="ordersTable">
+                                        <thead>
+                                            <tr>
+                                                <th><i class="fa fa-calendar"></i> Date</th>
+                                                <th><i class="fa fa-hashtag"></i> Order ID</th>
+                                                <th><i class="fa fa-user"></i> Customer Name</th>
+                                                <th><i class="fa fa-rupee-sign"></i> Total Cost</th>
+                                                <th><i class="fa fa-info-circle"></i> Status</th>
+                                                <th><i class="fa fa-cogs"></i> Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ordersTableBody">
+                                            <!-- Orders will be loaded here -->
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </form>
