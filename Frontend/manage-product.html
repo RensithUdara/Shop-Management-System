@@ -1,160 +1,375 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>GSMS - Product Management</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="mobile-web-app-capable" content="yes"/>
-    <meta name="csrf-token" content="kmapods5wQ5L1hn7rcR9OPst7EsN0gC7SrHh3m9K"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,300,600,700">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link media="all" type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
-    <link media="all" type="text/css" rel="stylesheet" href="css/style.css?v=1.0">
-    <link media="all" type="text/css" rel="stylesheet" href="css/sidebar-menu.css?v=1.0">
-    <link media="all" type="text/css" rel="stylesheet" href="css/custom.css?v=1.3.3">
-    <link media="all" type="text/css" rel="stylesheet" href="css/enhanced.css?v=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSMS - Product Management | Grocery Store Management System</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/modern.css">
 </head>
-<body class="tooltips">
-<div class="container">
-
-    <div class="header content rows-content-header">
-        <button class="button-menu-mobile show-sidebar">
-            <i class="fa fa-bars"></i>
-        </button>
-        <div class="navbar navbar-default" role="navigation">
-            <div class="container">
-
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav visible-lg visible-md limit-chars">
-                        <ul class="breadcrumb">
-                            <a href="index.html">
-                                <i class="zmdi zmdi-view-dashboard zmdi-hc-fw" title="Orders"></i>
-                            </a>
-                            <a href="manage-product.html">
-                                <i class="zmdi zmdi-assignment zmdi-hc-fw" title="Products"></i>
-                            </a>
-                        </ul>
-                    </ul>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-store"></i>
                 </div>
+                <div class="sidebar-brand-text">GSMS</div>
+            </a>
+        </div>
+        <div class="sidebar-nav">
+            <div class="nav-item">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="manage-product.html" class="nav-link active">
+                    <i class="fas fa-box"></i>
+                    <span>Products</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="order.html" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>New Order</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="orders-list.html" class="nav-link">
+                    <i class="fas fa-list-ul"></i>
+                    <span>Order History</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="reports.html" class="nav-link">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reports</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <div class="right content-page">
-        <div class="body content rows scroll-y">
-            <div class="box-info full" id="taskFormContainer">
-                <h2>Manage Products</h2>
-                <div class="panel-body pt-0">
-                    <div class="row mb-4">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#productModal">
-                                Add New Product
-                            </button>
-                        </div>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <header class="page-header animate-fade-in">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="page-title">
+                        <i class="fas fa-box text-primary"></i>
+                        Product Management
+                    </h1>
+                    <p class="page-subtitle">Manage your inventory and product catalog efficiently.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                        <i class="fas fa-plus"></i>
+                        Add Product
+                    </button>
+                    <button class="btn btn-info" onclick="importProducts()">
+                        <i class="fas fa-upload"></i>
+                        Import
+                    </button>
+                    <button class="btn btn-warning" onclick="exportProducts()">
+                        <i class="fas fa-download"></i>
+                        Export
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Product Statistics -->
+        <section class="stat-grid animate-fade-in" style="animation-delay: 0.1s;">
+            <div class="stat-card">
+                <div class="stat-icon stat-icon-primary">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="stat-value" id="totalProducts">0</div>
+                <div class="stat-label">Total Products</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon stat-icon-success">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <div class="stat-value" id="totalCategories">0</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon stat-icon-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-value" id="lowStockProducts">0</div>
+                <div class="stat-label">Low Stock</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon stat-icon-info">
+                    <i class="fas fa-rupee-sign"></i>
+                </div>
+                <div class="stat-value" id="totalValue">₹0</div>
+                <div class="stat-label">Inventory Value</div>
+            </div>
+        </section>
+
+        <!-- Search and Filter Section -->
+        <section class="search-filter-container animate-fade-in" style="animation-delay: 0.2s;">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="form-label">
+                        <i class="fas fa-search"></i>
+                        Search Products
+                    </label>
+                    <input type="text" class="form-control" id="searchProducts" 
+                           placeholder="Search by name or ID...">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">
+                        <i class="fas fa-filter"></i>
+                        Filter by Category
+                    </label>
+                    <select class="form-control" id="filterCategory">
+                        <option value="">All Categories</option>
+                        <option value="groceries">Groceries</option>
+                        <option value="beverages">Beverages</option>
+                        <option value="dairy">Dairy</option>
+                        <option value="bakery">Bakery</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">
+                        <i class="fas fa-sort-amount-down"></i>
+                        Sort by
+                    </label>
+                    <select class="form-control" id="sortBy">
+                        <option value="name">Product Name</option>
+                        <option value="price">Price</option>
+                        <option value="stock">Stock Level</option>
+                        <option value="date">Date Added</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-info w-100" onclick="applyProductFilters()">
+                        <i class="fas fa-filter"></i>
+                        Apply
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Card -->
+        <div class="card animate-fade-in" style="animation-delay: 0.3s;">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fas fa-list"></i>
+                        <span>Product Catalog</span>
                     </div>
-                    <table class="table table-bordered">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-info active" onclick="switchView('table')">
+                            <i class="fas fa-table"></i>
+                            Table
+                        </button>
+                        <button class="btn btn-info" onclick="switchView('grid')">
+                            <i class="fas fa-th"></i>
+                            Grid
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Table View -->
+                <div id="tableView" class="table-responsive">
+                    <table class="table" id="productsTable">
                         <thead>
-                        <th>Name</th>
-                        <th>Unit</th>
-                        <th>Price Per Unit</th>
-                        <th style="width: 150px">Action</th>
+                            <tr>
+                                <th>
+                                    <i class="fas fa-hashtag"></i>
+                                    ID
+                                </th>
+                                <th>
+                                    <i class="fas fa-box"></i>
+                                    Product Name
+                                </th>
+                                <th>
+                                    <i class="fas fa-balance-scale"></i>
+                                    Unit
+                                </th>
+                                <th>
+                                    <i class="fas fa-rupee-sign"></i>
+                                    Price
+                                </th>
+                                <th>
+                                    <i class="fas fa-warehouse"></i>
+                                    Stock
+                                </th>
+                                <th>
+                                    <i class="fas fa-cogs"></i>
+                                    Actions
+                                </th>
+                            </tr>
                         </thead>
-                        <tbody>
-
+                        <tbody id="productsTableBody">
+                            <!-- Products will be loaded here -->
+                            <tr>
+                                <td colspan="6" class="text-center p-5">
+                                    <div class="loading">
+                                        <i class="fas fa-spinner fa-spin fa-2x text-primary mb-3"></i>
+                                        <p class="text-muted">Loading products...</p>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Grid View -->
+                <div id="gridView" class="row" style="display: none;">
+                    <div id="productsGridContainer">
+                        <!-- Product cards will be loaded here -->
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!--Add new product fnction-->
-    <div class="modal fade-scale" id="productModal" role="dialog" data-backdrop="static">
-        <div class="modal-dialog ">
+    <!-- Add Product Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Add New Product</h4>
+                    <h5 class="modal-title">
+                        <i class="fas fa-plus"></i>
+                        Add New Product
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="productForm">
-                        <input type="hidden" name="id" id="id" value="0">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label >Name</label>
-                                    <input class="form-control" placeholder="Name" name="name" id="name" type="text" value="">
-                                </div>
+                    <form id="addProductForm">
+                        <div class="mb-3">
+                            <label class="form-label">Product Name</label>
+                            <input type="text" class="form-control" name="product_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Unit of Measurement</label>
+                            <select class="form-control" name="uoms" required>
+                                <option value="">Select Unit</option>
+                                <!-- Units will be loaded from backend -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price per Unit</label>
+                            <div class="input-group">
+                                <span class="input-group-text">₹</span>
+                                <input type="number" class="form-control" name="price" step="0.01" required>
                             </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label >Unit</label>
-                                    <select name="uoms" id="uoms" class="form-control">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label >Price Per Unit</label>
-                                    <input class="form-control" placeholder="Price Per Unit" name="price" id="price" type="text" value="">
-                                </div>
-                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Initial Stock Quantity</label>
+                            <input type="number" class="form-control" name="stock" value="0">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select class="form-control" name="category">
+                                <option value="groceries">Groceries</option>
+                                <option value="beverages">Beverages</option>
+                                <option value="dairy">Dairy</option>
+                                <option value="bakery">Bakery</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description (Optional)</label>
+                            <textarea class="form-control" name="description" rows="3"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="saveProduct">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i>
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="saveProduct()">
+                        <i class="fas fa-save"></i>
+                        Save Product
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!--Edit product-->
-    <div class="modal fade-scale" id="productModal2" role="dialog" data-backdrop="static">
-        <div class="modal-dialog ">
+    <!-- Edit Product Modal -->
+    <div class="modal fade" id="editProductModal" tabindex="-1">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Edit Product</h4>
+                    <h5 class="modal-title">
+                        <i class="fas fa-edit"></i>
+                        Edit Product
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editProductForm">
-                        <input type="hidden" name="id" id="id" value="0">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label >Name</label>
-                                    <input class="form-control" placeholder="Name" name="name" id="name" type="text" value="">
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label >Unit</label>
-                                    <select name="uoms" id="uoms" class="form-control">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label >Price Per Unit</label>
-                                    <input class="form-control" placeholder="Price Per Unit" name="price" id="price" type="text" value="">
-                                </div>
+                        <input type="hidden" name="product_id">
+                        <div class="mb-3">
+                            <label class="form-label">Product Name</label>
+                            <input type="text" class="form-control" name="product_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Unit of Measurement</label>
+                            <select class="form-control" name="uoms" required>
+                                <!-- Units will be loaded from backend -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price per Unit</label>
+                            <div class="input-group">
+                                <span class="input-group-text">₹</span>
+                                <input type="number" class="form-control" name="price" step="0.01" required>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="editProduct">Edit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i>
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="updateProduct()">
+                        <i class="fas fa-save"></i>
+                        Update Product
+                    </button>
                 </div>
             </div>
         </div>
-</div>
-<script src="js/packages/jquery.min.js"></script>
-<script src="js/custom/common.js"></script>
-<script src="js/custom/manage-product.js"></script>
-<script src="js/packages/bootstrap.min.js"></script>
+    </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/packages/jquery.min.js"></script>
+    <script src="JS/custom/common.js"></script>
+    <script src="JS/custom/manage-product.js"></script>
+    <script src="JS/custom/modern-products.js"></script>
 </body>
 </html>
