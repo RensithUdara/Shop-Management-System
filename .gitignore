@@ -1,5 +1,4 @@
 # Environment variables
-.env
 
 # Python
 __pycache__/
@@ -31,7 +30,6 @@ env/
 ENV/
 
 # IDE
-.vscode/
 .idea/
 
 # OS
@@ -40,3 +38,5 @@ Thumbs.db
 
 # Logs
 *.log
+config.bat
+node_modules
