@@ -49,5 +49,22 @@ def edit_product(connection, product):
     connection.commit()
     return cursor.lastrowid
 
+def get_product_statistics(connection):
+    cursor = connection.cursor()
+    
+    # Get total products
+    query = "SELECT COUNT(*) as total_products FROM product"
+    cursor.execute(query)
+    total_products = cursor.fetchone()[0]
+    
+    # For now, assume low stock items is a fixed number
+    # In a real application, you would have a stock quantity field
+    low_stock_items = 0
+    
+    return {
+        'total_products': total_products,
+        'low_stock_items': low_stock_items
+    }
+
 if __name__ == '__main__':
     connection = get_sql_connection()

@@ -6,7 +6,7 @@ from connection import get_sql_connection
 
 def get_all_orders(connection):
     cursor = connection.cursor()
-    query = ("SELECT * FROM orders")
+    query = ("SELECT Order_id, Customer_name, Date, Total FROM orders ORDER BY Date DESC")
 
     cursor.execute(query)
 
@@ -14,12 +14,44 @@ def get_all_orders(connection):
     for (Order_id, Customer_name, Date, Total) in cursor:
         response.append({
             'order_id': Order_id,
-            'customer_name':Customer_name,
+            'customer_name': Customer_name,
             'total': Total,
-            'datetime': Date,
+            'date': Date.strftime('%Y-%m-%d %H:%M:%S') if Date else '',
         })
 
     return response
+
+def get_order_statistics(connection):
+    cursor = connection.cursor()
+    
+    # Get total orders and revenue
+    query = """
+        SELECT 
+            COUNT(*) as total_orders,
+            COALESCE(SUM(Total), 0) as total_revenue
+        FROM orders
+    """
+    cursor.execute(query)
+    result = cursor.fetchone()
+    
+    return {
+        'total_orders': result[0] if result else 0,
+        'total_revenue': float(result[1]) if result and result[1] else 0.0
+    }
+
+def delete_order(connection, order_id):
+    cursor = connection.cursor()
+    
+    # Delete order details first (foreign key constraint)
+    detail_query = "DELETE FROM order_details WHERE order_id = %s"
+    cursor.execute(detail_query, (order_id,))
+    
+    # Delete the order
+    order_query = "DELETE FROM orders WHERE Order_id = %s"
+    cursor.execute(order_query, (order_id,))
+    
+    connection.commit()
+    return cursor.rowcount > 0
 
 def insert_order(connection, order):
     cursor = connection.cursor()

@@ -98,6 +98,66 @@ def get_all_orders ():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+@app.route('/getOrderStats', methods = ['GET'])
+def get_order_stats():
+    try:
+        stats = order_dao.get_order_statistics(connection)
+        response = jsonify(stats)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    except Exception as e:
+        print(f"Error in get_order_stats: {str(e)}")
+        response = jsonify({'total_orders': 0, 'total_revenue': 0})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
+@app.route('/getProductStats', methods = ['GET'])
+def get_product_stats():
+    try:
+        stats = product_dao.get_product_statistics(connection)
+        response = jsonify(stats)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    except Exception as e:
+        print(f"Error in get_product_stats: {str(e)}")
+        response = jsonify({'total_products': 0, 'low_stock_items': 0})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
+@app.route('/deleteOrder', methods = ['POST'])
+def delete_order():
+    try:
+        order_id = request.form['order_id']
+        result = order_dao.delete_order(connection, order_id)
+        response = jsonify({'success': True, 'deleted_order_id': order_id})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    except Exception as e:
+        print(f"Error in delete_order: {str(e)}")
+        response = jsonify({'error': str(e)})
+        response.status_code = 500
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
+@app.route('/exportOrders', methods = ['GET'])
+def export_orders():
+    try:
+        orders = order_dao.get_all_orders(connection)
+        # Create CSV content
+        csv_content = "Order ID,Customer Name,Date,Total\n"
+        for order in orders:
+            csv_content += f"{order['order_id']},{order['customer_name']},{order['date']},{order['total']}\n"
+        
+        response = jsonify({'csv_data': csv_content})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    except Exception as e:
+        print(f"Error in export_orders: {str(e)}")
+        response = jsonify({'error': str(e)})
+        response.status_code = 500
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
 if __name__ == '__main__':
     print("Starting server...")
     app.run(port=5000)
