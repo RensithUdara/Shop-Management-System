@@ -1,4 +1,3 @@
-import utils.session
 from datetime import datetime
 
 from mysql.connector import custom_error_exception
